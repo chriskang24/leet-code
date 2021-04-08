@@ -1,4 +1,4 @@
-var climbStairs = function (n) {
+const climbStairs = function (n) {
 
   let arr = [];
   arr[1] = 1;
