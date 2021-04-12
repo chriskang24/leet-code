@@ -5,12 +5,12 @@
 // You can return the answer in any order.
 
 const twoSum = function (nums, target) {
-  const comp = {};
+  const setStorage = {};
   for (let i = 0; i < nums.length; i++) {
-    if (comp[nums[i]] >= 0) {
-      return [comp[nums[i]], i];
+    if (setStorage[nums[i]] >= 0) {
+      return [setStorage[nums[i]], i];
     }
-    comp[target - nums[i]] = i;
+    setStorage[target - nums[i]] = i;
   }
 };
 
