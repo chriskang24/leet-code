@@ -5,11 +5,12 @@ class Node {
   }
 }
 
-class LinkedList {
+class DoublyLinkedList {
   constructor(value) {
     this.head = {
       value: value,
-      next: null
+      next: null,
+      prev: null
     }
     this.tail = this.head;
     this.length = 1;
@@ -19,9 +20,11 @@ class LinkedList {
   append(value) {
     const newNode = {
       value: value,
-      next: null
+      next: null,
+      prev: null
     };
 
+    newNode.prev = this.tail;
     // const newNode = new Node(value, next)
     // point the tail to the new node created
     this.tail.next = newNode;
@@ -36,9 +39,12 @@ class LinkedList {
     const newNode = {
       value: value,
       next: null,
+      prev: null
     }
     // const newNode = new Node(value, next )
     newNode.next = this.head;
+    // new node is the new head
+    this.head.prev = newNode
     this.head = newNode;
     this.length++;
     return this;
@@ -65,11 +71,22 @@ class LinkedList {
       return this.append(value);
     }
 
-    const newNode = new Node(value)
+    const newNode = {
+      value: value,
+      next: null,
+      prev: null
+    }
+
+    // LEADER = newNode before inserted value 
     const leader = this.traverseToIndex(index - 1);
-    const holdingPointer = leader.next;
+    // follower = node after inserted value 
+    const follower = leader.next;
     leader.next = newNode;
-    newNode.next = holdingPointer;
+    // make sure the previous node of the new inserted node is the leader
+    newNode.prev = leader;
+    newNode.next = follower;
+    // previous of follower is set to the new node
+    follower.prev = newNode;
     this.length++;
     return this.printList();
   }
@@ -97,65 +114,19 @@ class LinkedList {
     const unwantedNode = leader.next;
     leader.next = unwantedNode.next;
     this.length--;
-
     return this.printList();
   }
 
 }
 
 
-const myLinkedList = new LinkedList(10);
-myLinkedList.append(5);
+const myLinkedList = new DoublyLinkedList(10);
+myLinkedList.append(5)
+myLinkedList.append(16);
 myLinkedList.prepend(1);
 // 1 => 10 => 5
 // 1 => 99 => 10 => 5
 myLinkedList.insert(1, 99);
 myLinkedList.remove(3);
+console.log(myLinkedList.printList());
 console.log(myLinkedList)
-
-// getAt(index) {
-//   let counter = 0;
-//   let node = this.head;
-//   while (node) {
-//     if (counter === index) {
-//       return node;
-//     }
-//     counter++;
-//     node = node.next
-//   }
-//   return null;
-// }
-
-// insert(index, value) {
-//   if (!this.head) {
-//     this.head = new Node(value)
-//     return;
-//   }
-
-//   if (index === 0) {
-//     this.head = new Node(value, this.head);
-//     this.length++
-//     return;
-//   }
-
-//   const previous = this.getAt(index - 1) || this.getLast();
-//   const node = new Node(value, previous.next)
-//   previous.next = node;
-//   this.length++
-
-// }
-
-
-// getLast() {
-//   if (!this.head) {
-//     return null;
-//   }
-
-//   let node = this.head;
-//   while (node) {
-//     if (!node.next) {
-//       return node;
-//     }
-//     node = node.next;
-//   }
-// }

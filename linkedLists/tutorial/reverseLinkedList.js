@@ -101,6 +101,27 @@ class LinkedList {
     return this.printList();
   }
 
+  reverse() {
+    if (!this.head.next) {
+      return this.head;
+    }
+
+    let first = this.head;
+    this.tail = this.head;
+    let second = first.next;
+
+    while (second) {
+      let temp = second.next;
+      second.next = first;
+      first = second;
+      second = temp;
+    }
+
+    this.head.next = null;
+    this.head = first;
+
+    return this;
+  }
 }
 
 
@@ -110,52 +131,9 @@ myLinkedList.prepend(1);
 // 1 => 10 => 5
 // 1 => 99 => 10 => 5
 myLinkedList.insert(1, 99);
-myLinkedList.remove(3);
-console.log(myLinkedList)
-
-// getAt(index) {
-//   let counter = 0;
-//   let node = this.head;
-//   while (node) {
-//     if (counter === index) {
-//       return node;
-//     }
-//     counter++;
-//     node = node.next
-//   }
-//   return null;
-// }
-
-// insert(index, value) {
-//   if (!this.head) {
-//     this.head = new Node(value)
-//     return;
-//   }
-
-//   if (index === 0) {
-//     this.head = new Node(value, this.head);
-//     this.length++
-//     return;
-//   }
-
-//   const previous = this.getAt(index - 1) || this.getLast();
-//   const node = new Node(value, previous.next)
-//   previous.next = node;
-//   this.length++
-
-// }
-
-
-// getLast() {
-//   if (!this.head) {
-//     return null;
-//   }
-
-//   let node = this.head;
-//   while (node) {
-//     if (!node.next) {
-//       return node;
-//     }
-//     node = node.next;
-//   }
-// }
+// myLinkedList.remove(3);
+// myLinkedList.append(6)
+// myLinkedList.append(7)
+myLinkedList.reverse();
+console.log(myLinkedList.printList());
+// console.log(myLinkedList)
